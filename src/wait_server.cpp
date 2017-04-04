@@ -24,12 +24,10 @@ class WaitAction{
     ~WaitAction(void){}
 
     void cancelCallback(const actionlib_msgs::GoalID::ConstPtr &msg){
-      if(msg->id=="1"){
+      if(msg){
         ROS_INFO("Sleep action interrupted. Canceling..");
         this->cancel=true;
       }
-      else if(msg->id=="0")
-        this->cancel=false;
     }
 
     void callback(const actionlib_tutorials::WaitGoalConstPtr &goal){
@@ -47,8 +45,10 @@ class WaitAction{
         ROS_INFO("Sleep state finished");
         if(this->cancel==false)
           as_.setSucceeded(result_);
-        else if(this->cancel==true)
+        else if(this->cancel==true){
           as_.setAborted();
+          this->cancel=false;
+        }
       }
     }
 };
