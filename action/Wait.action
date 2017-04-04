@@ -1,0 +1,8 @@
+#goal def
+int32 wait
+---
+#result def
+bool result
+---
+#feedback
+int32 feedback
